@@ -66,7 +66,7 @@ while True:
     relative_x = goal_pos[0]-current_pos[0]
     relative_y = goal_pos[1]-current_pos[1]
     goal_angle = math.atan2(relative_y, relative_x)
-
+    print('goal angle: ' + str(goal_angle))
     #break if within .1 m
     if (posDiff(current_pos, goal_pos) < .1 ):
         break
@@ -74,13 +74,15 @@ while True:
     #calculate angle speed and lin speed drive
     ang_error = angleDiff(current_angle, goal_angle)
     pos_error = posDiff(current_pos, goal_pos)
-    ang_speed = pid_speed(1, .01, .01, ang_error, old_ang_error, error_list_angle)
-    lin_speed = pid_speed(1, .01, .01, pos_error, old_pos_error, error_list_pos)
+    print('error: ' + str(ang_error) + ' ' +str(pos_error))
+    ang_speed = pid_speed(.25, 0, 0, ang_error, old_ang_error, error_list_angle)
+    lin_speed = pid_speed(.5, 0, 0, pos_error, old_pos_error, error_list_pos)
     r.drive(angSpeed=ang_speed, linSpeed=lin_speed)
-
+    print('speed: ' + str(ang_speed) + ' ' + str(lin_speed))
     #set old values
     old_ang_error=ang_error
     old_pos_error=pos_error
     rate.sleep()
+    print(' ')
 
 r.drive(ang_speed=0, lin_speed=0)
