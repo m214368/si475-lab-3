@@ -46,3 +46,13 @@ def pid_speed(kp, ki, kd, error, old_error, error_list):
     to_return += kd * error - old_error
 
     return to_return
+
+
+#take input 
+x = float(input("X coordinate?"))
+y = float(input("Y coordinate?"))
+goal_pos = (x, y)
+
+# loop until at position
+while true:
+
