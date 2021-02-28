@@ -56,7 +56,7 @@ old_ang_error = 0
 old_pos_error = 0
 rate = rospy.Rate(10)
 
-while not rospy.is_shutdown:
+while True:
     #current pos
     current_pos = r.getPositionTup()
     print('current pos: ' + str(current_pos))
