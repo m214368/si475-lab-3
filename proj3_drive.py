@@ -7,9 +7,7 @@ error_list_pos = []
 error_list_angle = []
 
 #error function for angle
-def angleDiff(current, desired):
-    cur_angle = current[2]
-
+def angleDiff(cur_angle, desired):
     # calculate difference
     diff = cur_angle - desired
     if abs(diff) > math.pi:
