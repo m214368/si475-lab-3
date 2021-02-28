@@ -1,4 +1,4 @@
-import math
+import math, rospy
 from turtleAPI import robot
 
 # make the robot and lists for tracking error
