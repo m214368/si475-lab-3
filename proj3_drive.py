@@ -74,11 +74,13 @@ while True:
     #calculate angle speed and lin speed drive
     ang_error = angleDiff(current_angle, goal_angle)
     pos_error = posDiff(current_pos, goal_pos)
-    ang_speed = pid_speed(1, .1, .1, ang_error, old_ang_error, error_list_angle)
-    lin_speed = pid_speed(1, .1, .1, pos_error, old_pos_error, error_list_pos)
-    r.drive(angSpeed=ang_error, linSpeed=lin_speed)
+    ang_speed = pid_speed(1, .01, .01, ang_error, old_ang_error, error_list_angle)
+    lin_speed = pid_speed(1, .01, .01, pos_error, old_pos_error, error_list_pos)
+    r.drive(angSpeed=ang_speed, linSpeed=lin_speed)
 
     #set old values
     old_ang_error=ang_error
     old_pos_error=pos_error
     rate.sleep()
+
+r.drive(ang_speed=0, lin_speed=0)
