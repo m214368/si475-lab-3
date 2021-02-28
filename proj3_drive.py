@@ -57,7 +57,7 @@ goal_pos = (x, y)
 old_ang_error = 0
 old_pos_error = 0
 
-while true:
+while True:
     #current pos
     current_pos = r.getPositionTup()
     current_angle = current_pos[2]
