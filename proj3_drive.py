@@ -38,10 +38,9 @@ def pid_speed(kp, ki, kd, error, old_error, error_list):
         error_sum += i
 
     # kp portion + ki portion
-    to_return = kp * error + ki * error_sum
-
-    # kd
-    to_return += kd * error - old_error
+    to_return = kp * error
+    #+ ki * error_sumS
+    #to_return += kd * error - old_error
 
     return to_return
 
