@@ -74,8 +74,8 @@ while True:
     ang_error = angleDiff(current_angle, goal_angle)
     pos_error = posDiff(current_pos, goal_pos)
     print('error: ' + str(ang_error) + ' ' +str(pos_error))
-    ang_speed = pid_speed(.25, 0, 0, ang_error, old_ang_error, error_list_angle)
-    lin_speed = pid_speed(.5, 0, 0, pos_error, old_pos_error, error_list_pos)
+    ang_speed = pid_speed(-.25, 0, 0, ang_error, old_ang_error, error_list_angle)
+    lin_speed = pid_speed(.25, 0, 0, pos_error, old_pos_error, error_list_pos)
     r.drive(angSpeed=ang_speed, linSpeed=lin_speed)
     print('speed: ' + str(ang_speed) + ' ' + str(lin_speed))
     #set old values
