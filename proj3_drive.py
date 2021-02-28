@@ -84,4 +84,4 @@ while True:
     rate.sleep()
     print(' ')
 
-r.drive(ang_speed=0, lin_speed=0)
+r.drive(angSpeed=0, linSpeed=0)
