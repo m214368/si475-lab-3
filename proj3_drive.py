@@ -54,6 +54,7 @@ goal_pos = (x, y)
 # loop until at position
 old_ang_error = 0
 old_pos_error = 0
+rate = rospy.Rate(10)
 
 while True:
     #current pos
@@ -79,3 +80,4 @@ while True:
     #set old values
     old_ang_error=ang_error
     old_pos_error=pos_error
+    rate.sleep()
