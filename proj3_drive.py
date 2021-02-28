@@ -59,6 +59,7 @@ rate = rospy.Rate(10)
 while not rospy.is_shutdown:
     #current pos
     current_pos = r.getPositionTup()
+    print('current pos: ' + str(current_pos))
     current_angle = current_pos[2]
 
     #calculate the goal angle
