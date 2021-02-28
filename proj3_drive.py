@@ -65,7 +65,7 @@ while True:
     #calculate the goal angle
     relative_x = goal_pos[0]-current_pos[0]
     relative_y = goal_pos[1]-current_pos[1]
-    goal_angle = math.atan(relative_y, relative_x)
+    goal_angle = math.atan2(relative_y, relative_x)
 
     #break if within .1 m
     if (posDiff(current_pos, goal_pos) < .1 ):
