@@ -48,11 +48,36 @@ def pid_speed(kp, ki, kd, error, old_error, error_list):
     return to_return
 
 
-#take input 
+#take input
 x = float(input("X coordinate?"))
 y = float(input("Y coordinate?"))
 goal_pos = (x, y)
 
 # loop until at position
-while true:
+old_ang_error = 0
+old_pos_error = 0
 
+while true:
+    #current pos
+    current_pos = r.getPositionTup()
+    current_angle = current_pos[2]
+
+    #calculate the goal angle
+    relative_x = goal_pos[0]-current_pos[0]
+    relative_y = goal_pos[1]-current_pos[1]
+    goal_angle = math.atan(relative_y, relative_x)
+
+    #break if within .1 m
+    if (posDiff(current_pos, goal_pos) < .1 ):
+        break
+
+    #calculate angle speed and lin speed drive
+    ang_error = angleDiff(current_angle, goal_angle)
+    pos_error = pos_error(current_pos, goal_pos)
+    ang_speed = pid_speed(1, .1, .1, ang_error, old_ang_error, error_list_angle)
+    lin_speed = pid_speed(1, .1, .1, pos_error, old_pos_error, error_list_pos)
+    r.drive(angSpeed=ang_error, linSpeed=lin_speed)
+
+    #set old values
+    old_ang_error=ang_error
+    old_pos_error=pos_error
