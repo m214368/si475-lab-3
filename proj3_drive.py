@@ -76,7 +76,7 @@ while True:
     print('error: ' + str(ang_error) + ' ' +str(pos_error))
 
     #speed
-    ang_speed = pid_speed(-.25, 0, 0, ang_error, old_ang_error, error_list_angle)
+    ang_speed = pid_speed(.25, 0, 0, ang_error, old_ang_error, error_list_angle)
     lin_speed = pid_speed(.1, 0, 0, pos_error, old_pos_error, error_list_pos)
     r.drive(angSpeed=ang_speed, linSpeed=lin_speed)
     print('speed: ' + str(ang_speed) + ' ' + str(lin_speed))
