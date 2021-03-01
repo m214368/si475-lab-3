@@ -10,8 +10,10 @@ error_list_angle = []
 def angleDiff(cur_angle, desired):
     # calculate difference
     diff = cur_angle - desired
-    if abs(diff) > math.pi:
-        diff = abs(diff) - math.pi
+    while diff > math.pi:
+        diff -= 2*math.pi
+    while diff < -math.pi:
+        diff += 2*math.pi
 
     return diff
 
