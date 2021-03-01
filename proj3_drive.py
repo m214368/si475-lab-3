@@ -14,7 +14,7 @@ def angleDiff(cur_angle, desired):
         diff -= 2*math.pi
     while diff < -math.pi:
         diff += 2*math.pi
-    
+
     if (abs(diff) < .1):
     	if diff > 0: return .1
         if diff < 0: return -.1
@@ -53,52 +53,57 @@ def pid_speed(kp, ki, kd, error, old_error, error_list):
 
     return to_return
 
+def run():
+    #take input
+    x = float(input("X coordinate? "))
+    y = float(input("Y coordinate? "))
+    goal_pos = (x, y)
 
-#take input
-x = float(input("X coordinate?"))
-y = float(input("Y coordinate?"))
-goal_pos = (x, y)
+    # loop until at position
+    old_ang_error = 0
+    old_pos_error = 0
+    rate = rospy.Rate(20)
 
-# loop until at position
-old_ang_error = 0
-old_pos_error = 0
-rate = rospy.Rate(20)
+    while True:
+        speed_limit = 4
 
-while True:
-    speed_limit = 4
+        #current pos
+        current_pos = r.getPositionTup()
+        print('current pos: ' + str(current_pos))
+        current_angle = current_pos[2]
 
-    #current pos
-    current_pos = r.getPositionTup()
-    print('current pos: ' + str(current_pos))
-    current_angle = current_pos[2]
+        #calculate the goal angle
+        relative_x = goal_pos[0]-current_pos[0]
+        relative_y = goal_pos[1]-current_pos[1]
+        goal_angle = math.atan2(relative_y, relative_x)
+        print('goal angle: ' + str(goal_angle))
+        #break if within .1 m
+        if (posDiff(current_pos, goal_pos) < .1 ):
+            break
 
-    #calculate the goal angle
-    relative_x = goal_pos[0]-current_pos[0]
-    relative_y = goal_pos[1]-current_pos[1]
-    goal_angle = math.atan2(relative_y, relative_x)
-    print('goal angle: ' + str(goal_angle))
-    #break if within .1 m
-    if (posDiff(current_pos, goal_pos) < .1 ):
-        break
+        #calculate angle speed and lin speed drive
+        ang_error = angleDiff(current_angle, goal_angle)
+        pos_error = posDiff(current_pos, goal_pos)
+        print('error: ' + str(ang_error) + ' ' +str(pos_error))
 
-    #calculate angle speed and lin speed drive
-    ang_error = angleDiff(current_angle, goal_angle)
-    pos_error = posDiff(current_pos, goal_pos)
-    print('error: ' + str(ang_error) + ' ' +str(pos_error))
+        #speed
+        ang_speed = pid_speed(-.1, 0, -.01, ang_error, old_ang_error, error_list_angle)
+        lin_speed = pid_speed(.05, 0, .01, pos_error, old_pos_error, error_list_pos)
 
-    #speed
-    ang_speed = pid_speed(-.1, 0, -.01, ang_error, old_ang_error, error_list_angle)
-    lin_speed = pid_speed(.05, 0, .01, pos_error, old_pos_error, error_list_pos)
-    #set speed limit
-    if lin_speed > speed_limit:
-        lin_speed = speed_limit
-    r.drive(angSpeed=ang_speed, linSpeed=lin_speed)
-    print('speed: ' + str(ang_speed) + ' ' + str(lin_speed))
+        #set speed limit
+        if lin_speed > speed_limit:
+            lin_speed = speed_limit
 
-    #set old values
-    old_ang_error=ang_error
-    old_pos_error=pos_error
-    rate.sleep()
-    print(' ')
+        r.drive(angSpeed=ang_speed, linSpeed=lin_speed)
+        print('speed: ' + str(ang_speed) + ' ' + str(lin_speed))
 
-r.drive(angSpeed=0, linSpeed=0)
+        #set old values
+        old_ang_error=ang_error
+        old_pos_error=pos_error
+        rate.sleep()
+        print(' ')
+
+    r.drive(angSpeed=0, linSpeed=0)
+
+run()
+run()
