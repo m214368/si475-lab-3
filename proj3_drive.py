@@ -81,8 +81,12 @@ while True:
     print('error: ' + str(ang_error) + ' ' +str(pos_error))
 
     #speed
-    ang_speed = pid_speed(-.1, 0, -.01, ang_error, old_ang_error, error_list_angle)
+    ang_speed = pid_speed(-.15, 0, -.01, ang_error, old_ang_error, error_list_angle)
     lin_speed = pid_speed(.05, 0, .01, pos_error, old_pos_error, error_list_pos)
+    
+    #make sure speed not too low
+    if lin_speed < .02: lin_speed = .02
+
     r.drive(angSpeed=ang_speed, linSpeed=lin_speed)
     print('speed: ' + str(ang_speed) + ' ' + str(lin_speed))
 
