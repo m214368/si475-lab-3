@@ -35,7 +35,7 @@ if True:
       elif (s["bumper"] == 0): #left side bumper
         r.drive(angSpeed=-wheel,linSpeed=gas)
       else: #middle bumper
-        r.drive(angSpeed=wheel,linSpeed=0)
+        r.drive(angSpeed=wheel,linSpeed=0) #positive is left
         
       sleep(forward)
       r.drive(angSpeed=0,linSpeed=gas)
