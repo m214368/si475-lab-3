@@ -38,8 +38,8 @@ def pid_speed(kp, ki, kd, error, old_error, error_list):
         error_sum += i
 
     # kp portion + ki portion
-    to_return = kp * error + ki * error_sum
-    to_return += kd * error - old_error
+    to_return = (kp * error) + (ki * error_sum)
+    to_return += kd * (error - old_error)
 
     return to_return
 
@@ -52,7 +52,7 @@ goal_pos = (x, y)
 # loop until at position
 old_ang_error = 0
 old_pos_error = 0
-rate = rospy.Rate(10)
+rate = rospy.Rate(20)
 
 while True:
     #current pos
@@ -75,8 +75,8 @@ while True:
     print('error: ' + str(ang_error) + ' ' +str(pos_error))
 
     #speed
-    ang_speed = pid_speed(.25, 0, 0, ang_error, old_ang_error, error_list_angle)
-    lin_speed = pid_speed(.1, 0, 0, pos_error, old_pos_error, error_list_pos)
+    ang_speed = pid_speed(-.35, 0, -.01, ang_error, old_ang_error, error_list_angle)
+    lin_speed = pid_speed(.1, 0, .01, pos_error, old_pos_error, error_list_pos)
     r.drive(angSpeed=ang_speed, linSpeed=lin_speed)
     print('speed: ' + str(ang_speed) + ' ' + str(lin_speed))
 
