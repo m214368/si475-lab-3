@@ -31,9 +31,9 @@ if True:
       r.drive(angSpeed=0,linSpeed=-gas)
       sleep(back)
       if (s["bumper"] == 2): #right side bumper
-        r.drive(angSpeed=-wheel,linSpeed=gas)
-      elif (s["bumper"] == 0): #left side bumper
         r.drive(angSpeed=wheel,linSpeed=gas)
+      elif (s["bumper"] == 0): #left side bumper
+        r.drive(angSpeed=-wheel,linSpeed=gas)
       else: #middle bumper
         r.drive(angSpeed=wheel,linSpeed=0)
         
