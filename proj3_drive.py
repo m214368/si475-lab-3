@@ -19,6 +19,10 @@ def angleDiff(cur_angle, desired):
     	if diff > 0: return .1
         if diff < 0: return -.1
 
+    if (abs(diff) > 3):
+        if diff > 0: return 3
+        if diff < 0: return -3
+
     return diff
 
 # error function for position
@@ -61,6 +65,8 @@ old_pos_error = 0
 rate = rospy.Rate(20)
 
 while True:
+    speed_limit = 4
+
     #current pos
     current_pos = r.getPositionTup()
     print('current pos: ' + str(current_pos))
@@ -83,6 +89,9 @@ while True:
     #speed
     ang_speed = pid_speed(-.1, 0, -.01, ang_error, old_ang_error, error_list_angle)
     lin_speed = pid_speed(.05, 0, .01, pos_error, old_pos_error, error_list_pos)
+    #set speed limit
+    if lin_speed > speed_limit:
+        lin_speed = speed_limit
     r.drive(angSpeed=ang_speed, linSpeed=lin_speed)
     print('speed: ' + str(ang_speed) + ' ' + str(lin_speed))
 
